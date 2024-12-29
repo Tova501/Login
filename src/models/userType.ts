@@ -1,0 +1,7 @@
+export type UserType = {
+    fullName?: string,
+    email: string,
+    password: string,
+    address?: string,
+    phone?: string
+}
