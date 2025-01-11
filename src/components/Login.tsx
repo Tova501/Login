@@ -17,31 +17,31 @@ const Login = () => {
         boxShadow: 24,
         p: 4,
     };
-   
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return (<>
-                <Button style={{position: 'absolute', top: '2%', right: '2%'}} onClick={handleOpen}>Login</Button>
-                <h1 style={{width: '100%', padding: '20vh', color: '#1976d2'}}>Hello, enjoy visiting our site...</h1>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h4" component="h2">
-                            Login
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            <UserForm handleClose={handleClose} formAction='LOGIN'></UserForm>
-                        </Typography>
-                    </Box>
-                </Modal>
-        </>
-        );
+        <Button style={{ position: 'absolute', top: '2%', right: '2%' }} onClick={handleOpen}>Login</Button>
+        <h1 style={{ width: '100%', padding: '20vh', color: '#1976d2' }}>Hello, enjoy visiting our site...</h1>
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h4" component="h2">
+                    Login
+                </Typography>
+                <Box id="modal-modal-description" sx={{ mt: 2 }} >
+                    <UserForm handleClose={handleClose} formAction='LOGIN'></UserForm>
+                </Box>
+            </Box>
+        </Modal>
+    </>
+    );
 }
 export default Login
 

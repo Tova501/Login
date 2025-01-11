@@ -34,9 +34,9 @@ const UserUpdate = () => {
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Update user details
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <UserForm handleClose={handleClose} formAction="UPDATE_USER"></UserForm>
-                    </Typography>
+                    </Box>
                 </Box>
             </Modal>
         </>
