@@ -44,7 +44,7 @@ const Login = () => {
                 </Box>
             </Box>
         </Modal>
-        <Button style={{ position: 'absolute', top: '2%', left: '10%' }} onClick={handleOpen2}>Register</Button>
+        <Button style={{ position: 'absolute', top: '2%', left: '8%' }} onClick={handleOpen2}>Register</Button>
         <Modal
             open={open2}
             onClose={handleClose2}
@@ -60,6 +60,8 @@ const Login = () => {
                 </Box>
             </Box>
         </Modal>
+
+        <h1 style={{ width: '100%', padding: '20vh', color: '#1976d2' }}>Hello, enjoy visiting our site...</h1>
     </>
     );
 }
