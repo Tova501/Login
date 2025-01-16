@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { UserType } from "../models/userType";
-import { UserContext } from "./userReducer";
 import { Button, TextField } from "@mui/material";
+import { UserContext } from "../stores/userReducer";
+import axios from "axios";
 
-const UserForm = ({ formAction, handleClose }: { formAction: 'LOGIN' | 'UPDATE_USER', handleClose: Function }) => {
+const UserForm = ({ formAction, handleClose }: { formAction: 'LOGIN' | 'UPDATE_USER' | 'REGISTER', handleClose: Function }) => {
 
     const userContext = useContext(UserContext)
     const [user, setUser] = useState<UserType>(userContext.user)
@@ -17,25 +18,58 @@ const UserForm = ({ formAction, handleClose }: { formAction: 'LOGIN' | 'UPDATE_U
     }
 
     const handleSubmit = () => {
-        userContext.userDispatch({
-            type: formAction,
-            data: user
-        })
+        console.log('handle submit')
+        switch (formAction) {
+            case 'LOGIN':
+                axios.post(`http://localhost:3000/api/user/login`, { email: user.email, password: user.password })
+                    .then(res => {
+                        userContext.userDispatch({
+                            type: formAction,
+                            data: res.data.user
+                        })
+                        handleClose()
 
-        handleClose()
+                    }).catch(err => {
+                        console.log(err.request);
+                    });
+                break;
+            case 'UPDATE_USER':
+                axios.put(`http://localhost:3000/api/user`, { ...user }, {
+                    headers: { user_id: user.id }
+                })
+                    .then(res => {
+                        userContext.userDispatch({
+                            type: formAction,
+                            data: res.data
+                        })
+                        handleClose()
+
+                    }).catch(err => {
+                        console.log(err.request);
+                    });
+                break;
+            case 'REGISTER':
+                axios.post(`http://localhost:3000/api/user/register`, { email: user.email, password: user.password })
+                    .then(res => {
+                        userContext.userDispatch({
+                            type: formAction,
+                            data: { id: res.data.userId, email: user.email, password: user.password }
+                        })
+                        handleClose()
+
+                    }).catch(err => {
+                        console.log(err.request);
+                    });
+                break;
+            default:
+                break;
+        }
     }
 
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <TextField
-                    name="fullName"
-                    label="Name"
-                    fullWidth
-                    margin="normal"
-                    value={user.fullName}
-                    onChange={handleChange}
-                />
+
                 <TextField
                     name="email"
                     label="Email"
@@ -55,14 +89,36 @@ const UserForm = ({ formAction, handleClose }: { formAction: 'LOGIN' | 'UPDATE_U
                     onChange={handleChange}
                     required
                 />
-                <TextField
-                    name="phone"
-                    label="Phone"
-                    fullWidth
-                    margin="normal"
-                    value={user.phone}
-                    onChange={handleChange}
-                />
+
+                {
+                    formAction == 'UPDATE_USER' &&
+                    <><TextField
+                        name="firstName"
+                        label="First Name"
+                        fullWidth
+                        margin="normal"
+                        value={user.firstName}
+                        onChange={handleChange}
+                    />
+                        <TextField
+                            name="lastName"
+                            label="Last Name"
+                            fullWidth
+                            margin="normal"
+                            value={user.lastName}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="phone"
+                            label="Phone"
+                            fullWidth
+                            margin="normal"
+                            value={user.phone}
+                            onChange={handleChange}
+                        />
+                    </>
+                }
+
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                     Save
                 </Button>

@@ -1,15 +1,13 @@
 import { useEffect, useReducer, useState } from "react"
 import Login from "./components/Login"
-import userReducer, { UserContext } from "./components/userReducer"
 import SideMenu from "./components/SideMenu"
-import { Outlet, RouterProvider } from "react-router"
+import { RouterProvider } from "react-router"
 import { router } from "./Router"
-import NavBar from "./components/NavBar"
-import AppLayout from "./components/AppLayout"
+import userReducer, { UserContext } from "./stores/userReducer"
 
 
 function App(){
-  const [user, userDispatch] = useReducer(userReducer, { fullName: '', email: '', password: '', address: '', phone: '' })
+  const [user, userDispatch] = useReducer(userReducer, { firstName: '', lastName:'' , email: '', password: '', address: '', phone: '' })
   const [isUser, setIsUser] = useState(false);
 
   useEffect(() => {
